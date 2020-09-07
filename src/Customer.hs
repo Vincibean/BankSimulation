@@ -1,6 +1,9 @@
 module Customer
   ( Customer(..)
   , mkCustomers
+  , yellow
+  , red
+  , blue
   )
 where
 
@@ -16,12 +19,23 @@ import           TimeInSeconds                  ( TimeInSeconds )
 
 import           Control.Applicative            ( ZipList(ZipList, getZipList) )
 
+data ProcessingTimeParams = ProcessingTimeParams { getAlpha :: Int, getBeta :: Int}
+
+yellow :: ProcessingTimeParams
+yellow = ProcessingTimeParams 2 5
+
+red :: ProcessingTimeParams
+red = ProcessingTimeParams 2 2
+
+blue :: ProcessingTimeParams
+blue = ProcessingTimeParams 5 1
+
 data Customer = Customer { arrivalTime :: TimeInSeconds, processingTime :: TimeInSeconds } deriving (Eq, Show)
 
-mkCustomers :: IO [Customer]
-mkCustomers = do
+mkCustomers :: ProcessingTimeParams -> IO [Customer]
+mkCustomers params = do
   aas <- actualArrivals
-  pts <- processingTimes
+  pts <- processingTimes params
   let customers = Customer <$> ZipList aas <*> ZipList pts
   return $ getZipList customers
 
@@ -53,8 +67,8 @@ actualArrivals = do
   return inTime
 
 
-processingTimes :: IO [TimeInSeconds]
-processingTimes = do
+processingTimes :: ProcessingTimeParams -> IO [TimeInSeconds]
+processingTimes params = do
   ztos <- zerosToOnes :: IO [Float]
-  let processingTimeYellow = processingTime' 2 5
-  return $ ceilingFloatInteger . processingTimeYellow <$> ztos
+  let processingTimeColour = processingTime' (getAlpha params) (getBeta params)
+  return $ ceilingFloatInteger . processingTimeColour <$> ztos
