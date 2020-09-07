@@ -29,6 +29,32 @@ Your task is to write a program that can outputs to stdout the answers to the fo
 - Given only red customers, what are the average and maximum queue lengths in-front of the teller?
 - Which type of customer(yellow, red or blue) gives the closest value between the average and maximum customer waiting times?
 
-### Submission
+### Assumptions
+- The time unit for the project is seconds
+- The maximum number of customers is 500
+  - this value was chosen simply because it allows me to get results in a timely fashion on my machine 
+  - this value can easily be changed or passed through a configuration or as a command line argument 
+- The customer arrival function has been interpreted as the likeliness (probability) of a customer reaching the office at a given time; hence, if that probability is greater than 0.5, the customer will reach the office at that time; otherwise, they won't
+- The customer arrival function seems to prefer really large numbers
+  - to cope with this, the maximum arrival time of a customer after another customer is limited to 3600 seconds (i.e. 1 hour)
+  - even with this device, the results are of no particular interest (because a customer can still arrives - say - 2300 seconds after their predecessor, but the processing time is always a very small value - a handful of seconds)
+- We convert Floats and Doubles into Ints
+  - since these represents seconds, we believe that the loss of precision is not critical here
+  - we convert a Float to its ceiling value; this is to prevent a number of seconds equal to 0; in other words, the conversion of a positive float (representing a number of seconds) will always give back at least 1 second
+- Types could be improved (for instance, at the time of writing it is still possible to have a negative amount of seconds); however, since the program is pretty small and we are not exposing it as a library, we don't find this too big an issue
 
-You can submit your solution by putting it on Github and sending us a link. Ping us if you have any questions on problem. We expect this modelling to take no more than 4-6 hours of your time.
+
+### Result
+
+```
+Given only yellow customers, what are the average and maximum customer waiting times?
+- average customer waiting time: 0.0
+- maximum customer waiting time: 0
+
+Given only red customers, what are the average and maximum queue lengths in-front of the teller?
+- average queue length: 0.0
+- maximum queue length: 0
+
+Which type of customer (yellow, red or blue) gives the closest value between the average and maximum customer waiting times?
+Yellow
+```
