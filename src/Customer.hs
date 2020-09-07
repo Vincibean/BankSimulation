@@ -1,5 +1,6 @@
 module Customer
   ( Customer(..)
+  , ProcessingTimeParams
   , mkCustomers
   , yellow
   , red
