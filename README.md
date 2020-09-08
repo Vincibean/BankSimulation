@@ -42,6 +42,7 @@ Your task is to write a program that can outputs to stdout the answers to the fo
   - since these represents seconds, we believe that the loss of precision is not critical here
   - we convert a Float to its ceiling value; this is to prevent a number of seconds equal to 0; in other words, the conversion of a positive float (representing a number of seconds) will always give back at least 1 second
 - Types could be improved (for instance, at the time of writing it is still possible to have a negative amount of seconds); however, since the program is pretty small and we are not exposing it as a library, we don't find this too big an issue
+- While trying to avoid the most common mistakes, performance tuning was not the focus of this exercise
 
 
 ### Result
